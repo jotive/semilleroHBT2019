@@ -1,0 +1,10 @@
+/* 
+@Description Hoja de estilo del componente Mensaje-Saludo
+@Author Jose Eduardo Tirado Verbel - <Jotive@gmail.com>
+*/
+
+.saludo{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    color: darkslategray;
+    font-size: 2em;
+}
