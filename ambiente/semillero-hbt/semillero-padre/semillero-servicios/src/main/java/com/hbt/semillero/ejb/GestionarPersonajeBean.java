@@ -45,10 +45,12 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
 	public void crearPersonaje(PersonajeDTO personajeNuevo) {
+		logger.debug("Aqui inicia el metodo CrearPersonaje");
 		// Entidad nueva
 		Personaje personaje = convertirPersonajeDTOToPersonaje(personajeNuevo);
 		// Se almacena la informacion y se maneja la enidad comic
 		em.persist(personaje);
+		logger.debug("Aqui finaliza el metodo CrearPersonaje");
 	}
 
 	/**
@@ -57,6 +59,7 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void modificarPersonaje(Long id, String nombre, PersonajeDTO personajeNuevo) {
+		logger.debug("Aqui inicia el metodo ModificarPersonaje");
 		Personaje personajeModificar ;
 		if(personajeNuevo==null) {
 			// Entidad a modificar
@@ -66,6 +69,7 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 		}
 		personajeModificar.setNombre(nombre);
 		em.merge(personajeModificar);
+		logger.debug("Aqui finaliza el metodo ModificarPersonaje");
 	}
 
 	/**
@@ -74,10 +78,12 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 	 */
 	@TransactionAttribute(TransactionAttributeType.REQUIRED)
 	public void eliminarPersonaje(Long idPersonaje) {
+		logger.debug("Aqui inicia el metodo EliminarPersonaje");
 		Personaje personajeEliminar = em.find(Personaje.class, idPersonaje);
 		if (personajeEliminar != null) {
 			em.remove(personajeEliminar);
 		}
+		logger.debug("Aqui finaliza el metodo EliminarPersonaje");
 	}
 
 	/**
@@ -86,10 +92,13 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public PersonajeDTO consultarPersonaje(String idPersonaje) {
+		logger.debug("Aqui inicia el metodo ConsultarPersonaje");
 		Personaje personaje = null;
 		personaje = new Personaje();
 		personaje = em.find(Personaje.class, Long.parseLong(idPersonaje));
 		PersonajeDTO personajeDTO = convertirPersonajeToPersonajeDTO(personaje);
+		
+		logger.debug("Aqui finaliza el metodo ConsultarPersonaje");
 		return personajeDTO;
 	}
 
@@ -99,13 +108,16 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 	 */
 	@TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
 	public List<PersonajeDTO> consultarPersonajes() {
-		logger.debug("Se ejecuta el comando consultar comics");
+		logger.debug("Aqui inicia el metodo ListarPersonaje");
 		List<PersonajeDTO> resultadosPersonajeDTO = new ArrayList<PersonajeDTO>();
 		List<Personaje> resultados = em.createQuery("select p from Personaje p").getResultList();
 		for (Personaje personaje:resultados) {
 			resultadosPersonajeDTO.add(convertirPersonajeToPersonajeDTO(personaje));
 		}
+		
+		logger.debug("Aqui finaliza el metodo ListarPersonaje");
 		return resultadosPersonajeDTO;
+		
 	}
 
 	/**
@@ -116,6 +128,7 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 	 * @return
 	 */
 	private PersonajeDTO convertirPersonajeToPersonajeDTO(Personaje personaje) {
+		logger.debug("Aqui inicia el metodo convertirPersonajeToPersonajeDTO");
 		PersonajeDTO personajeDTO = new PersonajeDTO();
 		if(personaje.getId()!=null) {
 		 personajeDTO.setId(personaje.getId().toString());
@@ -131,6 +144,8 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 		personajeDTO.setFechaVenta(personaje.getFechaVenta());
 		personajeDTO.setEstadoEnum(personaje.getEstadoEnum());
 		personajeDTO.setCantidad(personaje.getCantidad());
+		
+		logger.debug("Aqui finaliza el metodo convertirPersonajeToPersonajeDTO");
 		return personajeDTO;
 	}
 
@@ -142,6 +157,7 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 	 * @return
 	 */
 	private Personaje convertirPersonajeDTOToPersonaje(PersonajeDTO personajeDTO) {
+		logger.debug("Aqui inicia el metodo convertirPersonajeDTOToPersonaje");
 		Personaje personaje = new Personaje();
 		if(personajeDTO.getId()!=null) {
 			personaje.setId(Long.parseLong(personajeDTO.getId()));
@@ -157,6 +173,7 @@ public class GestionarPersonajeBean implements IGestionarPersonajeLocal {
 		personaje.setFechaVenta(personajeDTO.getFechaVenta());
 		personaje.setEstadoEnum(personajeDTO.getEstadoEnum());
 		personaje.setCantidad(personajeDTO.getCantidad());
+		logger.debug("Aqui finaliza el metodo convertirPersonajeDTOToPersonaje");
 		return personaje;
 	}
 
