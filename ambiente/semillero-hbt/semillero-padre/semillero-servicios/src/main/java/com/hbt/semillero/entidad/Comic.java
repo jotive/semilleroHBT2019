@@ -18,7 +18,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 /**
- * <b>DescripciÃ³n:<b> Clase que determina la entidad que permite representar la
+ * <b>Descripcion:<b> Clase que determina la entidad que permite representar la
  * tabla "DB_SEMILLERO"."COMIC"
  * 
  * @author Jotive@gmail.com
